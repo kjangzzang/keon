@@ -1,174 +1,881 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Well,Live KEON. - Under Construction</title>
-    <style>
-        /* 全局重置与字体设置 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KEON Wellness — Live Well. Live KEON</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans KR", sans-serif;
-            background-color: #f4f6f8; /* 柔和的浅灰背景 */
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            line-height: 1.6;
-        }
+    :root {
+      --navy: #1A3B6A;
+      --navy-light: #234d8a;
+      --navy-dark: #112848;
+      --gray: #6B6B6B;
+      --gray-light: #f5f6f8;
+      --gray-mid: #e8eaed;
+      --white: #ffffff;
+      --gold: #C9A96E;
+    }
 
-        /* 主容器卡片 */
-        .container {
-            background-color: #ffffff;
-            width: 90%;
-            max-width: 600px;
-            padding: 60px 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            text-align: center;
-        }
+    html { scroll-behavior: smooth; }
 
-        /* Logo 样式 */
-        .logo {
-            max-width: 200px;
-            height: auto;
-            margin-bottom: 40px;
-        }
+    body {
+      font-family: 'Montserrat', 'Noto Sans KR', sans-serif;
+      color: #222;
+      background: var(--white);
+      overflow-x: hidden;
+    }
 
-        /* 英文主标题 */
-        h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: #111;
-            letter-spacing: -0.5px;
-        }
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 60px;
+      height: 72px;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(26,59,106,0.08);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 24px rgba(26,59,106,0.10); }
 
-        /* 英文描述 */
-        .en-text {
-            color: #666;
-            font-size: 16px;
-            margin-bottom: 30px;
-        }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px; text-decoration: none;
+    }
+    .nav-logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: 28px;
+      color: var(--navy);
+      letter-spacing: 2px;
+    }
+    .nav-logo-circle {
+      width: 28px; height: 28px;
+      border: 3.5px solid var(--navy);
+      border-radius: 50%;
+      border-bottom-color: transparent;
+      display: inline-block;
+      transform: rotate(-35deg);
+      margin: 0 -2px;
+    }
 
-        /* 分割线 */
-        .divider {
-            height: 1px;
-            background-color: #e0e0e0;
-            margin: 30px auto;
-            width: 60%;
-        }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 13px; font-weight: 500;
+      color: var(--gray);
+      letter-spacing: 0.5px;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--navy); }
 
-        /* 通知区域 */
-        .notice-section {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-        }
+    .nav-cta {
+      background: var(--navy);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 4px;
+      font-size: 13px; font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--navy-light); }
 
-        .notice-label {
-            display: inline-block;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            color: #d32f2f; /* Logo中的红色 */
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, #2a5298 100%);
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding-top: 72px;
+    }
 
-        .kr-text {
-            font-size: 15px;
-            color: #444;
-            word-break: keep-all; /* 防止韩语单词中间换行 */
-        }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='40' r='38' fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1'/%3E%3C/svg%3E") repeat;
+      background-size: 80px 80px;
+    }
 
-        /* 状态标签 */
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 8px 16px;
-            background-color: #e3f2fd;
-            color: #0d47a1;
-            border-radius: 50px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 40px;
-        }
-        
-        /* 增加一个小红点动画 */
-        .status-badge::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: #2196f3;
-            border-radius: 50%;
-            margin-right: 8px;
-            animation: pulse 2s infinite;
-        }
+    /* Decorative circles */
+    .hero-deco {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .hero-deco-1 { width: 600px; height: 600px; right: -100px; top: -100px; }
+    .hero-deco-2 { width: 400px; height: 400px; right: 80px; top: 60px; border-color: rgba(255,255,255,0.06); }
+    .hero-deco-3 { width: 200px; height: 200px; right: 190px; top: 170px; border-color: rgba(201,169,110,0.3); }
 
-        /* 页脚 */
-        footer {
-            font-size: 12px;
-            color: #999;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-        }
+    .hero-inner {
+      position: relative; z-index: 2;
+      max-width: 1200px; margin: 0 auto;
+      padding: 80px 60px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    }
 
-        /* 简单的脉冲动画 */
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.4; }
-            100% { opacity: 1; }
-        }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.9);
+      font-size: 11px; font-weight: 600; letter-spacing: 2px;
+      padding: 6px 16px; border-radius: 20px;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; background: var(--gold); border-radius: 50%;
+    }
 
-        /* 移动端适配 */
-        @media (max-width: 480px) {
-            .container {
-                padding: 40px 20px;
-            }
-            h1 {
-                font-size: 24px;
-            }
-        }
-    </style>
+    .hero-title {
+      font-size: clamp(36px, 4vw, 58px);
+      font-weight: 800; line-height: 1.15;
+      color: white;
+      margin-bottom: 12px;
+    }
+    .hero-title span { color: var(--gold); }
+
+    .hero-sub {
+      font-size: 16px; font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 3px;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+
+    .hero-desc {
+      font-size: 16px; line-height: 1.8;
+      color: rgba(255,255,255,0.75);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      margin-bottom: 44px;
+    }
+
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy-dark);
+      padding: 16px 36px;
+      border-radius: 4px;
+      font-size: 14px; font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: #d4b37e; transform: translateY(-1px); }
+
+    .btn-outline {
+      background: transparent;
+      color: white;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      padding: 16px 36px;
+      border-radius: 4px;
+      font-size: 14px; font-weight: 500;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.08); }
+
+    /* Hero stats */
+    .hero-stats {
+      display: flex; gap: 40px; margin-top: 52px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+    }
+    .hero-stat-num {
+      font-size: 32px; font-weight: 800; color: white; line-height: 1;
+    }
+    .hero-stat-num span { color: var(--gold); font-size: 20px; }
+    .hero-stat-label {
+      font-size: 12px; color: rgba(255,255,255,0.6);
+      margin-top: 6px; font-weight: 400;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    /* Hero right visual */
+    .hero-visual {
+      display: flex; justify-content: center; align-items: center;
+      position: relative;
+    }
+
+    .hero-card-stack {
+      position: relative; width: 340px; height: 400px;
+    }
+
+    .hero-card {
+      position: absolute;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 28px;
+      color: white;
+    }
+
+    .hero-card-main {
+      width: 300px; left: 20px; top: 20px;
+      background: rgba(255,255,255,0.14);
+    }
+
+    .hero-card-float {
+      width: 200px; right: -20px; bottom: 30px;
+      background: rgba(201,169,110,0.25);
+      border-color: rgba(201,169,110,0.4);
+    }
+
+    .card-icon {
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 16px;
+    }
+
+    .card-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; opacity: 0.9; }
+    .card-desc { font-size: 12px; opacity: 0.65; line-height: 1.6; font-family: 'Noto Sans KR', sans-serif; font-weight: 300; }
+
+    .card-metric { font-size: 28px; font-weight: 800; color: var(--gold); }
+    .card-metric-label { font-size: 11px; opacity: 0.7; margin-top: 4px; font-family: 'Noto Sans KR', sans-serif; }
+
+    /* ─── TRUST BAR ─── */
+    .trust-bar {
+      background: var(--gray-light);
+      padding: 28px 60px;
+      display: flex; align-items: center; justify-content: center; gap: 60px;
+      border-bottom: 1px solid var(--gray-mid);
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; color: var(--gray);
+      font-weight: 500;
+    }
+    .trust-icon { font-size: 20px; }
+
+    /* ─── SECTION BASE ─── */
+    section { padding: 100px 60px; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 3px;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::before {
+      content: ''; display: block;
+      width: 24px; height: 2px; background: var(--gold);
+    }
+
+    .section-title {
+      font-size: clamp(28px, 3vw, 42px);
+      font-weight: 800; line-height: 1.2;
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+    .section-desc {
+      font-size: 16px; line-height: 1.8;
+      color: var(--gray);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      max-width: 580px;
+    }
+
+    /* ─── SERVICES ─── */
+    .services { background: white; }
+
+    .services-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 60px; gap: 40px;
+    }
+
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+
+    .service-card {
+      border: 1px solid var(--gray-mid);
+      border-radius: 16px; padding: 40px 32px;
+      transition: all 0.3s;
+      cursor: default;
+      position: relative; overflow: hidden;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0;
+      height: 3px; width: 0;
+      background: var(--navy);
+      transition: width 0.3s;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(26,59,106,0.12); border-color: transparent; }
+    .service-card:hover::after { width: 100%; }
+
+    .service-icon-wrap {
+      width: 64px; height: 64px;
+      background: var(--gray-light);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; margin-bottom: 24px;
+      transition: background 0.3s;
+    }
+    .service-card:hover .service-icon-wrap { background: var(--navy); }
+
+    .service-name {
+      font-size: 18px; font-weight: 700; color: var(--navy);
+      margin-bottom: 12px;
+    }
+    .service-desc {
+      font-size: 14px; line-height: 1.8; color: var(--gray);
+      font-family: 'Noto Sans KR', sans-serif; font-weight: 300;
+    }
+
+    .service-tag {
+      display: inline-block; margin-top: 20px;
+      font-size: 11px; font-weight: 600; letter-spacing: 1px;
+      color: var(--navy); background: var(--gray-light);
+      padding: 4px 12px; border-radius: 20px;
+    }
+
+    /* ─── WHY KEON ─── */
+    .why { background: var(--navy); }
+
+    .why-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+
+    .why .section-title { color: white; }
+    .why .section-desc { color: rgba(255,255,255,0.65); max-width: 100%; }
+
+    .why-values { margin-top: 48px; display: flex; flex-direction: column; gap: 24px; }
+
+    .why-value {
+      display: flex; gap: 20px; align-items: flex-start;
+    }
+    .why-value-num {
+      font-size: 36px; font-weight: 800; color: rgba(255,255,255,0.12);
+      line-height: 1; min-width: 48px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .why-value-title { font-size: 16px; font-weight: 700; color: white; margin-bottom: 6px; }
+    .why-value-desc { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; font-family: 'Noto Sans KR', sans-serif; font-weight: 300; }
+
+    /* Right: visual grid */
+    .why-visual-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .why-vis-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px; padding: 28px 24px;
+      color: white;
+    }
+    .why-vis-card.accent {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--navy-dark);
+    }
+    .why-vis-card.span2 { grid-column: span 2; }
+
+    .vis-card-num {
+      font-size: 38px; font-weight: 800; line-height: 1;
+      margin-bottom: 8px;
+    }
+    .vis-card-label {
+      font-size: 13px; opacity: 0.75;
+      font-family: 'Noto Sans KR', sans-serif; font-weight: 400;
+    }
+
+    /* ─── PROCESS ─── */
+    .process { background: var(--gray-light); }
+    .process-steps {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+      position: relative; margin-top: 64px;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute; top: 36px; left: 10%; right: 10%;
+      height: 1px; background: var(--gray-mid);
+    }
+    .process-step { text-align: center; padding: 0 20px; position: relative; }
+    .step-num {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: white; border: 2px solid var(--gray-mid);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 20px; font-weight: 800; color: var(--navy);
+      position: relative; z-index: 1;
+      transition: all 0.3s;
+    }
+    .process-step:hover .step-num {
+      background: var(--navy); color: white; border-color: var(--navy);
+      transform: scale(1.1);
+    }
+    .step-title { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+    .step-desc { font-size: 13px; color: var(--gray); line-height: 1.7; font-family: 'Noto Sans KR', sans-serif; font-weight: 300; }
+
+    /* ─── TESTIMONIALS ─── */
+    .testimonials { background: white; }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+      margin-top: 60px;
+    }
+    .testimonial-card {
+      background: var(--gray-light);
+      border-radius: 16px; padding: 36px 32px;
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '"';
+      position: absolute; top: 20px; right: 28px;
+      font-size: 80px; font-weight: 800;
+      color: var(--navy); opacity: 0.08;
+      line-height: 1; font-family: Georgia, serif;
+    }
+    .testimonial-stars { color: var(--gold); font-size: 14px; margin-bottom: 16px; }
+    .testimonial-text {
+      font-size: 14px; line-height: 1.8; color: #444;
+      font-family: 'Noto Sans KR', sans-serif; font-weight: 300;
+      margin-bottom: 24px;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700; color: white;
+    }
+    .author-name { font-size: 14px; font-weight: 600; color: var(--navy); }
+    .author-role { font-size: 12px; color: var(--gray); font-family: 'Noto Sans KR', sans-serif; }
+
+    /* ─── CTA BANNER ─── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--navy) 0%, #2a5298 100%);
+      padding: 80px 60px;
+      text-align: center;
+    }
+    .cta-banner h2 {
+      font-size: clamp(28px, 3vw, 44px);
+      font-weight: 800; color: white; margin-bottom: 16px;
+    }
+    .cta-banner p {
+      font-size: 16px; color: rgba(255,255,255,0.7);
+      font-family: 'Noto Sans KR', sans-serif; font-weight: 300;
+      margin-bottom: 40px;
+    }
+    .cta-banner .btn-primary { font-size: 15px; padding: 18px 48px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--navy-dark);
+      color: rgba(255,255,255,0.6);
+      padding: 60px 60px 40px;
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+      padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 32px;
+    }
+    .footer-logo-text {
+      font-size: 24px; font-weight: 800; color: white;
+      letter-spacing: 2px; margin-bottom: 16px;
+    }
+    .footer-tagline { font-size: 12px; letter-spacing: 2px; color: var(--gold); margin-bottom: 20px; text-transform: uppercase; }
+    .footer-about { font-size: 13px; line-height: 1.8; font-family: 'Noto Sans KR', sans-serif; font-weight: 300; }
+
+    .footer-col-title { font-size: 12px; font-weight: 700; letter-spacing: 2px; color: white; text-transform: uppercase; margin-bottom: 20px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { text-decoration: none; font-size: 13px; color: rgba(255,255,255,0.55); transition: color 0.2s; font-family: 'Noto Sans KR', sans-serif; font-weight: 300; }
+    .footer-links a:hover { color: white; }
+
+    .footer-bottom {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 12px;
+    }
+
+    /* ─── SCROLL ANIMATION ─── */
+    .fade-up {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      section { padding: 70px 24px; }
+      .hero-inner { grid-template-columns: 1fr; text-align: center; padding: 60px 24px; }
+      .hero-visual { display: none; }
+      .hero-btns { justify-content: center; }
+      .hero-stats { justify-content: center; gap: 28px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .services-header { flex-direction: column; }
+      .why-inner { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr 1fr; }
+      .process-steps::before { display: none; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      .trust-bar { flex-wrap: wrap; padding: 24px; gap: 20px; }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <img src="https://raw.githubusercontent.com/kjangzzang/keon/refs/heads/main/keon.png" alt="jet Logo" class="logo">
+  <!-- NAV -->
+  <nav id="navbar">
+    <a class="nav-logo" href="#" style="overflow:hidden; height:48px; display:flex; align-items:center;">
+      <img src="mainlogo.png" alt="KEON Wellness" style="height:130px; width:auto; margin-top:4px;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">서비스</a></li>
+      <li><a href="#why">케온 소개</a></li>
+      <li><a href="#process">케어 과정</a></li>
+      <li><a href="#testimonials">고객 후기</a></li>
+    </ul>
+    <a class="nav-cta" href="#contact">상담 신청</a>
+  </nav>
 
-        <h1>Under Construction</h1>
-        <p class="en-text">
-            We are currently working on creating something amazing.<br>
-            Please check back soon
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-deco hero-deco-1"></div>
+    <div class="hero-deco hero-deco-2"></div>
+    <div class="hero-deco hero-deco-3"></div>
+
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          KEON WELLNESS — Silver Care
+        </div>
+        <div class="hero-sub">Live Well. Live KEON</div>
+        <h1 class="hero-title">
+          품격 있는 노년,<br/>
+          <span>따뜻한 돌봄</span>으로<br/>
+          시작합니다
+        </h1>
+        <p class="hero-desc">
+          KEON은 어르신 한 분 한 분의 존엄과 건강을 최우선으로 생각합니다.<br/>
+          전문화된 실버케어 서비스로 더 건강하고 행복한 삶을 함께 만들어갑니다.
         </p>
+        <div class="hero-btns">
+          <a class="btn-primary" href="#services">서비스 알아보기 →</a>
+          <a class="btn-outline" href="#contact">무료 상담 신청</a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-num">10<span>년+</span></div>
+            <div class="hero-stat-label">실버케어 전문 경험</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">5,000<span>+</span></div>
+            <div class="hero-stat-label">누적 케어 고객</div>
+          </div>
+          <div>
+            <div class="hero-stat-num">98<span>%</span></div>
+            <div class="hero-stat-label">고객 만족도</div>
+          </div>
+        </div>
+      </div>
 
-        <div class="status-badge">System Upgrade in Progress</div>
+      <div class="hero-visual">
+        <div class="hero-card-stack">
+          <div class="hero-card hero-card-main">
+            <div class="card-icon">🏥</div>
+            <div class="card-title">통합 건강 관리</div>
+            <div class="card-desc">전문 의료진과 케어매니저가 함께하는 맞춤형 건강관리 프로그램</div>
+          </div>
+          <div class="hero-card hero-card-float">
+            <div class="card-metric">98%</div>
+            <div class="card-metric-label">고객 만족도</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="notice-section">
-            <span class="notice-label">Notice</span>
-            <p class="kr-text">
-                Live KEON 은 준비 중입니다.<br>
-                더 나은 서비스를 제공하기 위해 현재 페이지를 리뉴얼하고 있습니다.<br>
-                곧 새로운 모습으로 찾아뵙겠습니다.
-            </p>
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-item"><span class="trust-icon">🏆</span> 보건복지부 인증 기관</div>
+    <div class="trust-item"><span class="trust-icon">👨‍⚕️</span> 전문 케어매니저 상주</div>
+    <div class="trust-item"><span class="trust-icon">🔒</span> 개인정보 보안 인증</div>
+    <div class="trust-item"><span class="trust-icon">📋</span> ISO 9001 품질 인증</div>
+    <div class="trust-item"><span class="trust-icon">🌿</span> 친환경 케어 환경</div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="section-inner">
+      <div class="services-header">
+        <div>
+          <div class="section-label">Our Services</div>
+          <h2 class="section-title">어르신을 위한<br/>전문 케어 서비스</h2>
+        </div>
+        <p class="section-desc">KEON은 다양한 실버케어 서비스를 통해 어르신과 가족 모두가 안심할 수 있는 최고 수준의 돌봄을 제공합니다.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card fade-up">
+          <div class="service-icon-wrap">🏠</div>
+          <div class="service-name">방문 요양 서비스</div>
+          <div class="service-desc">자택에서 편안하게 생활하실 수 있도록 전문 요양보호사가 직접 방문하여 일상생활을 도와드립니다.</div>
+          <span class="service-tag">HOME CARE</span>
         </div>
 
-        <footer>
-            © 2026 KEON.co.kr Corporation. All rights reserved.
-        </footer>
-    </div>
+        <div class="service-card fade-up">
+          <div class="service-icon-wrap">💊</div>
+          <div class="service-name">건강 모니터링</div>
+          <div class="service-desc">혈압, 혈당, 복약 관리 등 건강 지표를 체계적으로 기록·관리하고 이상 시 즉시 대응합니다.</div>
+          <span class="service-tag">HEALTH CARE</span>
+        </div>
 
+        <div class="service-card fade-up">
+          <div class="service-icon-wrap">🧠</div>
+          <div class="service-name">인지 활동 프로그램</div>
+          <div class="service-desc">치매 예방과 인지 기능 유지를 위한 전문 프로그램으로 두뇌 건강을 꼼꼼히 챙겨드립니다.</div>
+          <span class="service-tag">COGNITIVE</span>
+        </div>
+
+        <div class="service-card fade-up">
+          <div class="service-icon-wrap">🚗</div>
+          <div class="service-name">이동 지원 서비스</div>
+          <div class="service-desc">병원 동행, 외출 지원 등 이동이 어려우신 어르신을 위한 안전하고 편안한 이동 서비스를 제공합니다.</div>
+          <span class="service-tag">MOBILITY</span>
+        </div>
+
+        <div class="service-card fade-up">
+          <div class="service-icon-wrap">🍱</div>
+          <div class="service-name">영양 케어 서비스</div>
+          <div class="service-desc">영양사가 설계한 맞춤 식단으로 건강한 식생활을 유지할 수 있도록 식사 준비부터 배달까지 지원합니다.</div>
+          <span class="service-tag">NUTRITION</span>
+        </div>
+
+        <div class="service-card fade-up">
+          <div class="service-icon-wrap">💬</div>
+          <div class="service-name">정서 지원 & 상담</div>
+          <div class="service-desc">외로움과 정서적 어려움을 덜어드리기 위한 정기적 대화 상담과 사회 활동 연계 서비스를 운영합니다.</div>
+          <span class="service-tag">EMOTIONAL</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY KEON -->
+  <section class="why" id="why">
+    <div class="section-inner">
+      <div class="why-inner">
+        <div>
+          <div class="section-label" style="color:var(--gold);">Why KEON</div>
+          <h2 class="section-title">왜 KEON을<br/>선택해야 할까요</h2>
+          <p class="section-desc">단순한 돌봄이 아닌, 어르신의 삶의 질을 높이는 진정한 웰니스 파트너가 되겠습니다.</p>
+
+          <div class="why-values">
+            <div class="why-value fade-up">
+              <div class="why-value-num">01</div>
+              <div>
+                <div class="why-value-title">전문성과 경험</div>
+                <div class="why-value-desc">10년 이상의 실버케어 경험을 바탕으로 체계적이고 전문화된 서비스를 제공합니다.</div>
+              </div>
+            </div>
+            <div class="why-value fade-up">
+              <div class="why-value-num">02</div>
+              <div>
+                <div class="why-value-title">개인 맞춤 케어</div>
+                <div class="why-value-desc">어르신 한 분 한 분의 상태와 필요에 맞는 개별화된 케어 플랜을 수립합니다.</div>
+              </div>
+            </div>
+            <div class="why-value fade-up">
+              <div class="why-value-num">03</div>
+              <div>
+                <div class="why-value-title">24시간 안심 지원</div>
+                <div class="why-value-desc">언제 어디서나 도움이 필요할 때 즉시 대응할 수 있는 24시간 케어 시스템을 운영합니다.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="why-visual-grid fade-up">
+          <div class="why-vis-card">
+            <div class="vis-card-num">5,000+</div>
+            <div class="vis-card-label">누적 케어 고객</div>
+          </div>
+          <div class="why-vis-card accent">
+            <div class="vis-card-num">98%</div>
+            <div class="vis-card-label">고객 만족도</div>
+          </div>
+          <div class="why-vis-card">
+            <div class="vis-card-num">200+</div>
+            <div class="vis-card-label">전문 케어매니저</div>
+          </div>
+          <div class="why-vis-card">
+            <div class="vis-card-num">24H</div>
+            <div class="vis-card-label">상시 케어 지원</div>
+          </div>
+          <div class="why-vis-card span2" style="text-align:center;">
+            <div style="font-size:13px;opacity:0.7;font-family:'Noto Sans KR',sans-serif;font-weight:300;line-height:1.8;">
+              "어르신이 행복하면 가족도 행복합니다.<br/>KEON이 함께하겠습니다."
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process" id="process">
+    <div class="section-inner">
+      <div style="text-align:center; margin-bottom:20px;">
+        <div class="section-label" style="justify-content:center;">Care Process</div>
+        <h2 class="section-title">케어 시작 4단계</h2>
+        <p class="section-desc" style="margin: 0 auto;">간단한 상담 신청부터 맞춤 케어 시작까지, KEON이 모든 과정을 함께합니다.</p>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step fade-up">
+          <div class="step-num">01</div>
+          <div class="step-title">무료 상담 신청</div>
+          <div class="step-desc">전화 또는 온라인으로 간편하게 상담을 신청하시면 24시간 내 연락드립니다.</div>
+        </div>
+        <div class="process-step fade-up">
+          <div class="step-num">02</div>
+          <div class="step-title">케어 욕구 사정</div>
+          <div class="step-desc">전문 케어매니저가 방문하여 어르신의 건강 상태와 필요를 면밀히 파악합니다.</div>
+        </div>
+        <div class="process-step fade-up">
+          <div class="step-num">03</div>
+          <div class="step-title">맞춤 케어 플랜</div>
+          <div class="step-desc">개인 상황에 최적화된 케어 계획을 수립하고 담당 케어매니저를 배정합니다.</div>
+        </div>
+        <div class="process-step fade-up">
+          <div class="step-num">04</div>
+          <div class="step-title">케어 시작 & 모니터링</div>
+          <div class="step-desc">체계적인 케어를 시작하고 정기적으로 케어 상태를 점검·개선합니다.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials" id="testimonials">
+    <div class="section-inner">
+      <div class="section-label">Testimonials</div>
+      <h2 class="section-title">고객 이야기</h2>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">어머니가 혼자 계시는 게 항상 걱정이었는데, KEON 케어매니저 선생님 덕분에 이제는 마음 놓고 일할 수 있습니다. 세심하고 친절한 케어에 정말 감사드려요.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">김</div>
+            <div>
+              <div class="author-name">김민정 님</div>
+              <div class="author-role">서울 강남구 · 방문 요양 이용 2년</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">치매 초기 진단 후 어떻게 해야 할지 막막했는데, 인지 활동 프로그램을 통해 아버지가 훨씬 활기차게 생활하고 계십니다. KEON을 만난 게 정말 다행이에요.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">이</div>
+            <div>
+              <div class="author-name">이준호 님</div>
+              <div class="author-role">경기 성남시 · 인지 케어 프로그램 1년 6개월</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card fade-up">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">병원 동행부터 약 챙기는 것까지 하나하나 꼼꼼하게 챙겨주셔서 너무 감사합니다. 케어매니저 선생님이 마치 가족 같아요. KEON 덕분에 건강하게 지내고 있습니다.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">박</div>
+            <div>
+              <div class="author-name">박순자 님</div>
+              <div class="author-role">부산 해운대구 · 종합 케어 서비스 3년</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner" id="contact">
+    <div class="section-label" style="justify-content:center; color:var(--gold);">Get Started</div>
+    <h2>지금 바로 무료 상담을 신청하세요</h2>
+    <p>전문 케어매니저가 어르신의 상황에 맞는 최적의 서비스를 안내해 드립니다.</p>
+    <a class="btn-primary" href="tel:1800-0000">📞 1800-0000 무료 상담</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo-text">KEON</div>
+        <div class="footer-tagline">Live Well. Live KEON</div>
+        <p class="footer-about">KEON Wellness는 어르신과 그 가족의 더 나은 삶을 위해 전문화된 실버케어 서비스를 제공합니다. 존엄과 따뜻함을 최우선 가치로 삼습니다.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">서비스</div>
+        <ul class="footer-links">
+          <li><a href="#">방문 요양</a></li>
+          <li><a href="#">건강 모니터링</a></li>
+          <li><a href="#">인지 활동</a></li>
+          <li><a href="#">이동 지원</a></li>
+          <li><a href="#">영양 케어</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">회사</div>
+        <ul class="footer-links">
+          <li><a href="#">회사 소개</a></li>
+          <li><a href="#">케어매니저 소개</a></li>
+          <li><a href="#">뉴스 & 공지</a></li>
+          <li><a href="#">파트너십</a></li>
+          <li><a href="#">채용</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">고객 지원</div>
+        <ul class="footer-links">
+          <li><a href="#">무료 상담</a></li>
+          <li><a href="#">자주 묻는 질문</a></li>
+          <li><a href="#">케어 가이드</a></li>
+          <li><a href="#">개인정보처리방침</a></li>
+          <li><a href="#">이용약관</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 KEON Wellness. All rights reserved.</span>
+      <span>대표번호: 1800-0000 | 이메일: care@keon.co.kr</span>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Fade-up on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
-
-
